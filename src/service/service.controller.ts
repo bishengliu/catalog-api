@@ -8,7 +8,8 @@ import {
   Delete,
   UseGuards,
 } from '@nestjs/common';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
+import { GetUser } from '../common/decorators/user.decorator';
 import {
   FilterServicesDto,
   CreateServiceVersionDto,
@@ -17,7 +18,6 @@ import {
 } from './dto';
 import { ServiceService } from './service.service';
 import { User } from './../auth/entities/user.entity';
-import { GetUser } from './../auth/decorators/user.decorator';
 
 @Controller('service')
 @UseGuards(JwtAuthGuard)
