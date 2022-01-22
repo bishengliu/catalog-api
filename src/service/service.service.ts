@@ -15,13 +15,11 @@ export class ServiceService {
     private serviceRepository: ServiceRepository,
   ) {}
 
-  create(createServiceDto: CreateServiceDto) {
-    return this.serviceRepository.createService(createServiceDto);
-  }
+  create = (createServiceDto: CreateServiceDto) =>
+    this.serviceRepository.createService(createServiceDto);
 
-  findAllServices(offset: number) {
-    return this.serviceRepository.findAllServices(offset);
-  }
+  findAllServices = (offset: number) =>
+    this.serviceRepository.findAllServices(offset);
 
   findOne = (id: string) => this.serviceRepository.findServiceByUUID(id);
 
