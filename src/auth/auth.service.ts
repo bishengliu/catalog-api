@@ -14,9 +14,9 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  signin(signInDto: SignInDto) {
-    const jwtPayload = this.userRepository.generateUserPayload(signInDto);
-    const accessToken = this.jwtService.sign(jwtPayload);
+  async signin(signInDto: SignInDto) {
+    const jwtPayload = await this.userRepository.generateUserPayload(signInDto);
+    const accessToken = await this.jwtService.sign(jwtPayload);
     return {
       accessToken,
       user: jwtPayload,
