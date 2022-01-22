@@ -1,5 +1,13 @@
 import { isUuid } from 'uuidv4';
 import { EntityRepository, Repository } from 'typeorm';
+import {
+  BadRequestException,
+  ConflictException,
+  InternalServerErrorException,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
+
 import { Version, Service } from '../entities';
 import {
   CreateServiceDto,
@@ -9,14 +17,6 @@ import {
   FilterKey,
   OrderByKey,
 } from '../dto';
-
-import {
-  BadRequestException,
-  ConflictException,
-  InternalServerErrorException,
-  Logger,
-  NotFoundException,
-} from '@nestjs/common';
 
 @EntityRepository(Service)
 export class ServiceRepository extends Repository<Service> {

@@ -18,7 +18,8 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@catalog/service/*": ["src/service/*"]
+      "@catalog/service/*": ["src/service/*"],
+      "@catalog/auth/*": ["src/auth/*"]
     }
   }
 }
