@@ -19,8 +19,8 @@ export class ServiceService {
     return this.serviceRepository.createService(createServiceDto);
   }
 
-  findAll() {
-    return this.serviceRepository.find({});
+  findAllServices(offset: number) {
+    return this.serviceRepository.findAllServices(offset);
   }
 
   findOne = (id: string) => this.serviceRepository.findServiceByUUID(id);

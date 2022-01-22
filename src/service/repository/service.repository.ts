@@ -146,4 +146,10 @@ export class ServiceRepository extends Repository<Service> {
     query.skip(offset).take(limits);
     return await query.getMany();
   }
+
+  async findAllServices(offset: number): Promise<Service[]> {
+    const skipOffset = offset || 0;
+    const query = this.createQueryBuilder('service').skip(skipOffset).take(100);
+    return await query.getMany();
+  }
 }
