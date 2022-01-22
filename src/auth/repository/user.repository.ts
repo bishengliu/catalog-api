@@ -1,11 +1,10 @@
-import { SignInDto } from './../dto/signin.dto';
+import { JwtPayload } from './../../../dist/auth/interfaces/jwt-payload.d';
 import { EntityRepository, Repository } from 'typeorm';
 import {
-  BadRequestException,
   ConflictException,
   InternalServerErrorException,
   Logger,
-  NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 
@@ -35,14 +34,14 @@ export class UserRepository extends Repository<User> {
     }
   }
 
-  async validateUserPassword(SignInDto: SignInDto) {
+  async generateUserPayload(SignInDto: SignInDto): Promise<JwtPayload> {
     const { username, password } = SignInDto;
     const user = await this.findOne({ username });
     if (!user || !user.isValidPassword(password))
-      throw new BadRequestException(
-        "the combination of username and password does't exist",
+      throw new UnauthorizedException(
+        'the combination of username and password is invalid',
       );
-    // need to return jwt payload
+    return { username, isAdmin: user.isAdmin };
   }
 
   private async hashPassword(password: string, salt: string): Promise<string> {
