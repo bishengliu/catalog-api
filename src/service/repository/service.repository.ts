@@ -41,7 +41,7 @@ export class ServiceRepository extends Repository<Service> {
         throw new InternalServerErrorException();
       }
     }
-    return service;
+    return await this.findServiceByUUID(service.id);
   }
 
   async findServiceByUUID(uuid: string): Promise<Service> {
@@ -110,7 +110,10 @@ export class ServiceRepository extends Repository<Service> {
   async filterServices(
     filterServicesDto: FilterServicesDto,
   ): Promise<Service[]> {
-    const query = this.createQueryBuilder('service');
+    const query = this.createQueryBuilder('service').leftJoinAndSelect(
+      'service.versions',
+      'version',
+    );
     // filter
     switch (filterServicesDto.filterKey) {
       case FilterKey.SERVICE:
@@ -149,7 +152,10 @@ export class ServiceRepository extends Repository<Service> {
 
   async findAllServices(offset: number): Promise<Service[]> {
     const skipOffset = offset || 0;
-    const query = this.createQueryBuilder('service').skip(skipOffset).take(100);
+    const query = this.createQueryBuilder('service')
+      .leftJoinAndSelect('service.versions', 'version')
+      .skip(skipOffset)
+      .take(100);
     return await query.getMany();
   }
 }
