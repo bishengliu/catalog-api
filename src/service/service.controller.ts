@@ -1,5 +1,9 @@
-import { FilterServicesDto } from './dto/filter-searvices.dto';
-import { CreateServiceVersionDto } from './dto/create-service-version.dto';
+import {
+  FilterServicesDto,
+  CreateServiceVersionDto,
+  CreateServiceDto,
+  UpdateServiceDto,
+} from '@catalog/service/dto';
 import {
   Controller,
   Get,
@@ -10,8 +14,6 @@ import {
   Delete,
 } from '@nestjs/common';
 import { ServiceService } from './service.service';
-import { CreateServiceDto } from './dto/create-service.dto';
-import { UpdateServiceDto } from './dto/update-service.dto';
 
 @Controller('service')
 export class ServiceController {

@@ -1,4 +1,3 @@
-import { Service } from './service.entity';
 import {
   BaseEntity,
   Column,
@@ -9,6 +8,7 @@ import {
   ManyToOne,
   Unique,
 } from 'typeorm';
+import { Service } from './service.entity';
 
 @Entity('version')
 @Unique('service_version_unq', ['service', 'version'])

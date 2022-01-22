@@ -1,7 +1,12 @@
-import { Version } from './../entities/version.entity';
-import { CreateServiceDto } from './../dto/create-service.dto';
-import { CreateServiceVersionDto } from './../dto/create-service-version.dto';
-import { Service } from './../entities/service.entity';
+import { Version, Service } from '@catalog/service/entities';
+import {
+  CreateServiceDto,
+  CreateServiceVersionDto,
+  UpdateServiceDto,
+  FilterServicesDto,
+  FilterKey,
+  OrderByKey,
+} from '@catalog/service/dto';
 import { isUuid } from 'uuidv4';
 
 import { EntityRepository, Repository } from 'typeorm';
@@ -12,12 +17,6 @@ import {
   Logger,
   NotFoundException,
 } from '@nestjs/common';
-import { UpdateServiceDto } from '../dto/update-service.dto';
-import {
-  FilterServicesDto,
-  FilterKey,
-  OrderByKey,
-} from '../dto/filter-searvices.dto';
 
 @EntityRepository(Service)
 export class ServiceRepository extends Repository<Service> {
