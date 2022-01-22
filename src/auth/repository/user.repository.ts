@@ -44,7 +44,7 @@ export class UserRepository extends Repository<User> {
       throw new UnauthorizedException(
         'the combination of username and password is invalid',
       );
-    return { username, isAdmin: user.isAdmin };
+    return { id: user.id, username, isAdmin: user.isAdmin };
   }
 
   private async hashPassword(password: string, salt: string): Promise<string> {

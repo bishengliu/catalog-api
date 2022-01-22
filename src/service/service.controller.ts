@@ -1,10 +1,4 @@
 import {
-  FilterServicesDto,
-  CreateServiceVersionDto,
-  CreateServiceDto,
-  UpdateServiceDto,
-} from './dto';
-import {
   Controller,
   Get,
   Post,
@@ -12,10 +6,21 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import {
+  FilterServicesDto,
+  CreateServiceVersionDto,
+  CreateServiceDto,
+  UpdateServiceDto,
+} from './dto';
 import { ServiceService } from './service.service';
+import { User } from './../auth/entities/user.entity';
+import { GetUser } from './../auth/decorators/user.decorator';
 
 @Controller('service')
+@UseGuards(JwtAuthGuard)
 export class ServiceController {
   constructor(private readonly serviceService: ServiceService) {}
 
@@ -40,7 +45,7 @@ export class ServiceController {
 
   // retrieve all services
   @Get()
-  findAllServices(@Param('offset') offset: number) {
+  findAllServices(@Param('offset') offset: number, @GetUser() user: User) {
     return this.serviceService.findAllServices(offset);
   }
 
