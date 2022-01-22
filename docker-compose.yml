@@ -26,6 +26,7 @@ services:
       - JWT_SECRET=${JWT_SECRET}
       - APP_EXPIRES=${APP_EXPIRES}
       - APP_PORT=${APP_PORT}
+      - ADMIN_USERNAME=${ADMIN_USERNAME}
     ports: 
       - "3000:3000"
     container_name: catalog-api
