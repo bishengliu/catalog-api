@@ -3,7 +3,7 @@ import {
   CreateServiceVersionDto,
   CreateServiceDto,
   UpdateServiceDto,
-} from '@catalog/service/dto';
+} from './dto';
 import {
   Controller,
   Get,

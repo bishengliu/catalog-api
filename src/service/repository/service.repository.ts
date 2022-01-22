@@ -1,4 +1,6 @@
-import { Version, Service } from '@catalog/service/entities';
+import { isUuid } from 'uuidv4';
+import { EntityRepository, Repository } from 'typeorm';
+import { Version, Service } from '../entities';
 import {
   CreateServiceDto,
   CreateServiceVersionDto,
@@ -6,10 +8,8 @@ import {
   FilterServicesDto,
   FilterKey,
   OrderByKey,
-} from '@catalog/service/dto';
-import { isUuid } from 'uuidv4';
+} from '../dto';
 
-import { EntityRepository, Repository } from 'typeorm';
 import {
   BadRequestException,
   ConflictException,
