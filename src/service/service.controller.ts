@@ -27,7 +27,7 @@ export class ServiceController {
   // create a service
   @Post()
   createService(@Body() createServiceDto: CreateServiceDto) {
-    return this.serviceService.create(createServiceDto);
+    return this.serviceService.createService(createServiceDto);
   }
   // append versions to a service
   @Post('version')
@@ -52,7 +52,7 @@ export class ServiceController {
   // retrieve a service including all its versions
   @Get(':id')
   findServiceById(@Param('id') id: string) {
-    return this.serviceService.findOne(id);
+    return this.serviceService.findOneService(id);
   }
 
   // update a service
@@ -61,12 +61,12 @@ export class ServiceController {
     @Param('id') id: string,
     @Body() updateServiceDto: UpdateServiceDto,
   ) {
-    return this.serviceService.update(id, updateServiceDto);
+    return this.serviceService.updateService(id, updateServiceDto);
   }
 
   // remove a service
   @Delete(':id')
   removeService(@Param('id') id: string) {
-    return this.serviceService.remove(id);
+    return this.serviceService.removeService(id);
   }
 }

@@ -15,18 +15,18 @@ export class ServiceService {
     private serviceRepository: ServiceRepository,
   ) {}
 
-  create = (createServiceDto: CreateServiceDto) =>
+  createService = (createServiceDto: CreateServiceDto) =>
     this.serviceRepository.createService(createServiceDto);
 
   findAllServices = (offset: number) =>
     this.serviceRepository.findAllServices(offset);
 
-  findOne = (id: string) => this.serviceRepository.findServiceByUUID(id);
+  findOneService = (id: string) => this.serviceRepository.findServiceByUUID(id);
 
-  update = (id: string, updateServiceDto: UpdateServiceDto) =>
+  updateService = (id: string, updateServiceDto: UpdateServiceDto) =>
     this.serviceRepository.updateService(id, updateServiceDto);
 
-  remove = (id: string): Promise<Service> =>
+  removeService = (id: string): Promise<Service> =>
     this.serviceRepository.removeServiceByUUID(id);
 
   createServiceVersion = (
