@@ -1,5 +1,5 @@
 import { InjectRepository } from '@nestjs/typeorm';
-import { ServiceRepository } from './repository/service.repository';
+import { ServiceRepository } from '../repository/service.repository';
 import { Injectable } from '@nestjs/common';
 import {
   FilterServicesDto,
