@@ -1,8 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Version } from './entities/version.entity';
+import { CreateServiceVersionDto } from './dto/create-service-version.dto';
+import { Service } from './entities/service.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateServiceDto } from './dto/create-service.dto';
 import { UpdateServiceDto } from './dto/update-service.dto';
 import { ServiceRepository } from './repository/service.repository';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class ServiceService {
@@ -16,18 +19,19 @@ export class ServiceService {
   }
 
   findAll() {
-    return `This action returns all service`;
+    return this.serviceRepository.find({});
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} service`;
-  }
+  findOne = (id: string) => this.serviceRepository.findServiceByUUID(id);
 
-  update(id: number, updateServiceDto: UpdateServiceDto) {
-    return `This action updates a #${id} service`;
-  }
+  update = (id: string, updateServiceDto: UpdateServiceDto) =>
+    this.serviceRepository.updateService(id, updateServiceDto);
 
-  remove(id: number) {
-    return `This action removes a #${id} service`;
-  }
+  remove = (id: string): Promise<Service> =>
+    this.serviceRepository.removeServiceByUUID(id);
+
+  createServiceVersion = (
+    createServiceVersionDto: CreateServiceVersionDto,
+  ): Promise<Version> =>
+    this.serviceRepository.createServiceVersion(createServiceVersionDto);
 }

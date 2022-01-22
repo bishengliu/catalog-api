@@ -16,7 +16,11 @@ export class Version extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => Service, (service) => service.versions)
+  @ManyToOne(() => Service, (service) => service.versions, {
+    cascade: true,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   service: Service;
 
   @Column({ type: 'varchar', nullable: false })

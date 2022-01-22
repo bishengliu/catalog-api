@@ -22,7 +22,9 @@ export class Service extends BaseEntity {
   @Column({ type: 'text', nullable: true })
   description: string;
 
-  @OneToMany(() => Version, (version) => version.service, { eager: true })
+  @OneToMany(() => Version, (version) => version.service, {
+    eager: true,
+  })
   versions: Version[];
 
   @CreateDateColumn()
