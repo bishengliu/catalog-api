@@ -1,9 +1,4 @@
-import {
-  FilterServicesDto,
-  CreateServiceVersionDto,
-  CreateServiceDto,
-  UpdateServiceDto,
-} from './dto';
+import { JwtAuthGuard } from '@catalog/auth/jwt-auth.guard';
 import {
   Controller,
   Get,
@@ -12,10 +7,18 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
+import {
+  FilterServicesDto,
+  CreateServiceVersionDto,
+  CreateServiceDto,
+  UpdateServiceDto,
+} from './dto';
 import { ServiceService } from './service.service';
 
 @Controller('service')
+@UseGuards(JwtAuthGuard)
 export class ServiceController {
   constructor(private readonly serviceService: ServiceService) {}
 
