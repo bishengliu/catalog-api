@@ -17,11 +17,13 @@ export class ServiceController {
   constructor(private readonly serviceService: ServiceService) {}
 
   @Post()
-  create(@Body() createServiceDto: CreateServiceDto) {
+  createService(@Body() createServiceDto: CreateServiceDto) {
     return this.serviceService.create(createServiceDto);
   }
   @Post('version')
-  createVersion(@Body() createServiceVersionDto: CreateServiceVersionDto) {
+  createServiceVersion(
+    @Body() createServiceVersionDto: CreateServiceVersionDto,
+  ) {
     return this.serviceService.createServiceVersion(createServiceVersionDto);
   }
 
@@ -31,17 +33,20 @@ export class ServiceController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findServiceById(@Param('id') id: string) {
     return this.serviceService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateServiceDto: UpdateServiceDto) {
+  updateService(
+    @Param('id') id: string,
+    @Body() updateServiceDto: UpdateServiceDto,
+  ) {
     return this.serviceService.update(id, updateServiceDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  removeService(@Param('id') id: string) {
     return this.serviceService.remove(id);
   }
 }

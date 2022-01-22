@@ -3,6 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateServiceDto {
   @ApiProperty({
+    type: String,
     minimum: 3,
     maximum: 20,
   })
@@ -12,9 +13,15 @@ export class CreateServiceDto {
   @MaxLength(50)
   service: string;
 
+  @ApiProperty({
+    type: String,
+  })
   @IsString()
   description: string;
 
+  @ApiProperty({
+    type: String,
+  })
   @IsString()
   @IsNotEmpty()
   version: string;
