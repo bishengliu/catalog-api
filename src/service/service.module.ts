@@ -6,8 +6,8 @@ import { ServiceController } from './service.controller';
 import { ServiceRepository } from './repository/service.repository';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Service])],
+  imports: [TypeOrmModule.forFeature([ServiceRepository])],
   controllers: [ServiceController],
-  providers: [ServiceService, ServiceRepository],
+  providers: [ServiceService],
 })
 export class ServiceModule {}
