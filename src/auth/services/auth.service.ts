@@ -1,9 +1,8 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
-import { SignInDto, SignUpDto } from './dto';
-import { JwtPayload } from './interfaces/jwt-payload';
-import { UserRepository } from './repository/user.repository';
+import { SignInDto, SignUpDto } from '../dto';
+import { UserRepository } from '../repository/user.repository';
 
 @Injectable()
 export class AuthService {
