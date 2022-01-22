@@ -1,13 +1,13 @@
-import { FilterServicesDto } from './dto/filter-searvices.dto';
-import { Version } from './entities/version.entity';
-import { CreateServiceVersionDto } from './dto/create-service-version.dto';
-import { Service } from './entities/service.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateServiceDto } from './dto/create-service.dto';
-import { UpdateServiceDto } from './dto/update-service.dto';
 import { ServiceRepository } from './repository/service.repository';
 import { Injectable } from '@nestjs/common';
-
+import {
+  FilterServicesDto,
+  CreateServiceVersionDto,
+  CreateServiceDto,
+  UpdateServiceDto,
+} from '@catalog/service/dto';
+import { Version, Service } from '@catalog/service/entities';
 @Injectable()
 export class ServiceService {
   constructor(
