@@ -13,6 +13,11 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { UpdateServiceDto } from '../dto/update-service.dto';
+import {
+  FilterServicesDto,
+  FilterKey,
+  OrderByKey,
+} from '../dto/filter-searvices.dto';
 
 @EntityRepository(Service)
 export class ServiceRepository extends Repository<Service> {
@@ -101,5 +106,45 @@ export class ServiceRepository extends Repository<Service> {
       this.logger.error(error);
       throw new InternalServerErrorException();
     }
+  }
+
+  async filterServices(
+    filterServicesDto: FilterServicesDto,
+  ): Promise<Service[]> {
+    const query = this.createQueryBuilder('service');
+    // filter
+    switch (filterServicesDto.filterKey) {
+      case FilterKey.SERVICE:
+        query.where('service.service like :service', {
+          service: `%${filterServicesDto.filterValue}%`,
+        });
+        break;
+      case FilterKey.DESCRIPTION:
+        query.where('service.description like :description', {
+          description: `%${filterServicesDto.filterValue}%`,
+        });
+        break;
+      default:
+        // no filter
+        break;
+    }
+
+    // orderby
+    switch (filterServicesDto.OrderBy) {
+      case OrderByKey.SERVICE:
+        query.orderBy('service.service');
+        break;
+      case OrderByKey.CREATEDATE:
+        query.orderBy('service.createAt');
+        break;
+      default:
+        break;
+    }
+
+    // pagination
+    const offset = filterServicesDto.offset || 0;
+    const limits = filterServicesDto.limits || 100;
+    query.skip(offset).take(limits);
+    return await query.getMany();
   }
 }

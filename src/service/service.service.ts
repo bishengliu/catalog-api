@@ -1,3 +1,4 @@
+import { FilterServicesDto } from './dto/filter-searvices.dto';
 import { Version } from './entities/version.entity';
 import { CreateServiceVersionDto } from './dto/create-service-version.dto';
 import { Service } from './entities/service.entity';
@@ -34,4 +35,7 @@ export class ServiceService {
     createServiceVersionDto: CreateServiceVersionDto,
   ): Promise<Version> =>
     this.serviceRepository.createServiceVersion(createServiceVersionDto);
+
+  filterServices = (filterServicesDto: FilterServicesDto): Promise<Service[]> =>
+    this.serviceRepository.filterServices(filterServicesDto);
 }

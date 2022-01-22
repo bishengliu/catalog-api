@@ -5,7 +5,7 @@ export class CreateServiceDto {
   @ApiProperty({
     type: String,
     minimum: 3,
-    maximum: 20,
+    maximum: 50,
   })
   @IsString()
   @IsNotEmpty()

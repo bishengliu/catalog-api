@@ -1,3 +1,4 @@
+import { FilterServicesDto } from './dto/filter-searvices.dto';
 import { CreateServiceVersionDto } from './dto/create-service-version.dto';
 import {
   Controller,
@@ -25,6 +26,10 @@ export class ServiceController {
     @Body() createServiceVersionDto: CreateServiceVersionDto,
   ) {
     return this.serviceService.createServiceVersion(createServiceVersionDto);
+  }
+  @Post('search')
+  searchServices(@Body() filterServicesDto: FilterServicesDto) {
+    return this.serviceService.filterServices(filterServicesDto);
   }
 
   @Get()
