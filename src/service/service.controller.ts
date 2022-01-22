@@ -1,4 +1,3 @@
-import { JwtAuthGuard } from '@catalog/auth/jwt-auth.guard';
 import {
   Controller,
   Get,
@@ -16,6 +15,7 @@ import {
   UpdateServiceDto,
 } from './dto';
 import { ServiceService } from './service.service';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('service')
 @UseGuards(JwtAuthGuard)
