@@ -16,7 +16,7 @@ import {
   CreateServiceDto,
   UpdateServiceDto,
 } from './dto';
-import { ServiceService } from './service.service';
+import { ServiceService } from './services/service.service';
 import { User } from './../auth/entities/user.entity';
 
 @Controller('service')
