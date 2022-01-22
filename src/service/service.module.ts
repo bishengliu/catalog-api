@@ -1,4 +1,3 @@
-import { Service } from '@catalog/service/entities/service.entity';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ServiceService } from './service.service';

@@ -1,4 +1,3 @@
-import { JwtPayload } from './../../../dist/auth/interfaces/jwt-payload.d';
 import { EntityRepository, Repository } from 'typeorm';
 import {
   ConflictException,
@@ -10,6 +9,7 @@ import * as bcrypt from 'bcrypt';
 
 import { User } from '../entities/user.entity';
 import { SignUpDto, SignInDto } from '../dto';
+import { JwtPayload } from '../interfaces/jwt-payload';
 
 @EntityRepository(User)
 export class UserRepository extends Repository<User> {
@@ -19,11 +19,14 @@ export class UserRepository extends Repository<User> {
     const { username, password } = signUpDto;
     const user = new User();
     user.username = username;
-    user.salt = await bcrypt.genSalt();
-    user.password = await this.hashPassword(password, user.salt);
-
     try {
+      user.salt = await bcrypt.genSalt();
+      user.password = await this.hashPassword(password, user.salt);
       await user.save();
+      return {
+        username: user.username,
+        message: 'signup successful',
+      };
     } catch (error) {
       this.logger.error(error);
       if (error.code === '23505') {
