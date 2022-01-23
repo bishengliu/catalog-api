@@ -1,12 +1,15 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common';
 import { GetUser } from 'src/common/decorators/user.decorator';
+import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { PermissionService } from './services/permission.service';
 import { CreatePermissionDto } from './dto/create-permission.dto';
 import { RemovePermissionDto } from './dto/remove-permission.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { User } from '@catalog/auth/entities/user.entity';
 
 @ApiTags('Permission')
 @Controller('permission')
+@UseGuards(JwtAuthGuard)
 export class PermissionController {
   constructor(private readonly permissionService: PermissionService) {}
 
@@ -20,8 +23,13 @@ export class PermissionController {
     return this.permissionService.removeAccess(removePermissionDto);
   }
   @Get()
-  getAccesses(@GetUser('id') userId: string) {
-    return this.permissionService.getAccesses(userId);
+  getAccesses(@GetUser() user: User) {
+    if (user.isAdmin) {
+      return {
+        message: `admin user has full access to all services`,
+      };
+    }
+    return this.permissionService.getAccesses(user.id);
   }
   @Get(':id')
   listUserAccess(@Param('id') id: string) {

@@ -1,3 +1,4 @@
+import { UserRepository } from './../../auth/repository/user.repository';
 import { EntityRepository, Repository } from 'typeorm';
 import {
   BadRequestException,
@@ -6,12 +7,11 @@ import {
   Logger,
   NotFoundException,
 } from '@nestjs/common';
+import { isUuid } from 'uuidv4';
 import { Permission } from '../entities/permission.entity';
 import { RemovePermissionDto } from '../dto/remove-permission.dto';
 import { CreatePermissionDto } from './../dto/create-permission.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserRepository } from '@catalog/auth/repository/user.repository';
-import { isUuid } from 'uuidv4';
 
 @EntityRepository(Permission)
 export class PermissionRepository extends Repository<Permission> {
@@ -88,14 +88,7 @@ export class PermissionRepository extends Repository<Permission> {
       if (!isUuid(userId)) {
         throw new BadRequestException();
       }
-      const user = await this.userRepository.findOne(userId);
-      if (user.isAdmin) {
-        return {
-          message: `admin user has full access to all services`,
-        };
-      } else {
-        return await this.find({ userId: userId });
-      }
+      return await this.find({ userId: userId });
     } catch (error) {
       this.logger.error(error);
       throw new InternalServerErrorException();
