@@ -7,14 +7,17 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   OneToMany,
+  ManyToOne,
 } from 'typeorm';
 import { Version } from './version.entity';
-
 @Entity('service')
 @Unique(['service'])
 export class Service extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @Column({ type: 'varchar', nullable: false })
+  userId: string;
 
   @Column({ type: 'varchar', nullable: false })
   service: string;

@@ -6,6 +6,7 @@ import {
   InternalServerErrorException,
   Logger,
   NotFoundException,
+  UnauthorizedException,
 } from '@nestjs/common';
 
 import { Version, Service } from '../entities';
@@ -22,11 +23,15 @@ import {
 export class ServiceRepository extends Repository<Service> {
   private readonly logger = new Logger(ServiceRepository.name);
 
-  async createService(createServiceDto: CreateServiceDto): Promise<Service> {
+  async createService(
+    userId: string,
+    createServiceDto: CreateServiceDto,
+  ): Promise<Service> {
     const service = new Service();
     try {
       service.service = createServiceDto.service;
       service.description = createServiceDto.description;
+      service.userId = userId;
       await service.save();
 
       const version = new Version();
@@ -57,7 +62,6 @@ export class ServiceRepository extends Repository<Service> {
   ): Promise<Service> {
     try {
       const service = await this.findServiceByUUID(id);
-
       service.service = updateServiceDto.service;
       service.description = updateServiceDto.description;
       await service.save();
@@ -73,6 +77,7 @@ export class ServiceRepository extends Repository<Service> {
   }
 
   async createServiceVersion(
+    userId: string,
     createServiceVersionDto: CreateServiceVersionDto,
   ): Promise<Version> {
     const service = await this.findServiceByUUID(createServiceVersionDto.uuid);

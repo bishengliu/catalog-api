@@ -1,5 +1,5 @@
-import { InjectRepository } from '@nestjs/typeorm';
 import { ServiceRepository } from '../repository/service.repository';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
 import {
   FilterServicesDto,
@@ -15,8 +15,8 @@ export class ServiceService {
     private serviceRepository: ServiceRepository,
   ) {}
 
-  createService = (createServiceDto: CreateServiceDto) =>
-    this.serviceRepository.createService(createServiceDto);
+  createService = (userId: string, createServiceDto: CreateServiceDto) =>
+    this.serviceRepository.createService(userId, createServiceDto);
 
   findAllServices = (offset: number) =>
     this.serviceRepository.findAllServices(offset);
@@ -30,9 +30,13 @@ export class ServiceService {
     this.serviceRepository.removeServiceByUUID(id);
 
   createServiceVersion = (
+    userId: string,
     createServiceVersionDto: CreateServiceVersionDto,
   ): Promise<Version> =>
-    this.serviceRepository.createServiceVersion(createServiceVersionDto);
+    this.serviceRepository.createServiceVersion(
+      userId,
+      createServiceVersionDto,
+    );
 
   filterServices = (filterServicesDto: FilterServicesDto): Promise<Service[]> =>
     this.serviceRepository.filterServices(filterServicesDto);
