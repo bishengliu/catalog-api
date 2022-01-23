@@ -19,7 +19,8 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@catalog/service/*": ["src/service/*"],
-      "@catalog/auth/*": ["src/auth/*"]
+      "@catalog/auth/*": ["src/auth/*"],
+      "@catalog/permission/*": ["src/auth/*"]
     }
   }
 }
