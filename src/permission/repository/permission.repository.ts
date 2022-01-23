@@ -28,13 +28,6 @@ export class PermissionRepository extends Repository<Permission> {
     const { userId, serviceId } = createPermissionDto;
 
     try {
-      const user = await this.userRepository.findOne(userId);
-      if (user.isAdmin) {
-        return {
-          message: `admin user already has full access to service ${serviceId}`,
-        };
-      }
-
       if (await this.find({ userId: userId, serviceId: serviceId })) {
         return {
           message: `user(${userId}) already has the full access to service ${serviceId}`,
@@ -58,13 +51,6 @@ export class PermissionRepository extends Repository<Permission> {
   async removePermission(removePermissionDto: RemovePermissionDto) {
     const { userId, serviceId } = removePermissionDto;
     try {
-      const user = await this.userRepository.findOne(userId);
-      if (user.isAdmin) {
-        return {
-          message: `cannot remove admin user to access to service ${serviceId}`,
-        };
-      }
-
       const permission = await this.findOne({
         userId: userId,
         serviceId: serviceId,

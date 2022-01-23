@@ -3,7 +3,6 @@ import {
   NestInterceptor,
   ExecutionContext,
   CallHandler,
-  UnauthorizedException,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 
