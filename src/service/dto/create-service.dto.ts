@@ -6,6 +6,7 @@ export class CreateServiceDto {
     type: String,
     minimum: 3,
     maximum: 50,
+    required: true,
   })
   @IsString()
   @IsNotEmpty()
@@ -15,12 +16,14 @@ export class CreateServiceDto {
 
   @ApiProperty({
     type: String,
+    required: false,
   })
   @IsString()
   description: string;
 
   @ApiProperty({
     type: String,
+    required: true,
   })
   @IsString()
   @IsNotEmpty()
