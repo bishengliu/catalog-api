@@ -1,5 +1,5 @@
-import { IsString, IsNotEmpty, MinLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { IsString, IsNotEmpty, MinLength } from 'class-validator';
 
 export enum FilterKey {
   SERVICE = 'service',
@@ -13,7 +13,7 @@ export enum OrderByKey {
 
 export class FilterServicesDto {
   @ApiProperty({
-    type: FilterKey,
+    enum: FilterKey,
   })
   @IsString()
   @IsNotEmpty()
@@ -29,7 +29,7 @@ export class FilterServicesDto {
   filterValue: string;
 
   @ApiProperty({
-    type: OrderByKey,
+    enum: OrderByKey,
   })
   OrderBy: OrderByKey;
 

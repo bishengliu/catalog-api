@@ -6,6 +6,7 @@ export class UpdateServiceDto {
     type: String,
     minimum: 3,
     maximum: 20,
+    required: true,
   })
   @IsString()
   @IsNotEmpty()
@@ -15,6 +16,7 @@ export class UpdateServiceDto {
 
   @ApiProperty({
     type: String,
+    required: false,
   })
   @IsString()
   description: string;

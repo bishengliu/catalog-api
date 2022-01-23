@@ -1,8 +1,6 @@
-import { UserRepository } from './../../auth/repository/user.repository';
 import { EntityRepository, Repository } from 'typeorm';
 import {
   BadRequestException,
-  ConflictException,
   InternalServerErrorException,
   Logger,
   NotFoundException,

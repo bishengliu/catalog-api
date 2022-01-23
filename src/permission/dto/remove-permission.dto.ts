@@ -1,4 +1,12 @@
-import { PartialType } from '@nestjs/swagger';
-import { CreatePermissionDto } from './create-permission.dto';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsUUID } from 'class-validator';
 
-export class RemovePermissionDto extends PartialType(CreatePermissionDto) {}
+export class RemovePermissionDto {
+  @ApiProperty({ type: String })
+  @IsUUID(4)
+  userId: string;
+
+  @ApiProperty({ type: String })
+  @IsUUID(4)
+  serviceId: string;
+}
