@@ -1,73 +1,77 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
+<h1 align="center">
+  Service Catalog
+</h1>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+  <p align="center">A simple dockerized service catalog restful backend using <a href="https://nestjs.com/" target="_blank">NestJs</a>, <a href="https://typeorm.io/" target="_blank">TypeORM</a>, <a href="https://www.typescriptlang.org/" target="_blank">TypeScript</a> and <a href="https://www.postgresql.org/" target="_blank">PostgreSQL</a></p>
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Features
 
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Installation
-
-```bash
-$ npm install
-```
+- user management and JWT auth;
+- service catalog CRUD function, supporting filtering, sorting, searching and pagination;
+- fine-graded permission / access control;
+- healthcheck endpoint and OpenAPI swagger doc;
 
 ## Running the app
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+docker-compose up -d
 ```
+- the catalog application is exposed on localhost port 3000;
+- sign up via `/auth/signup` using `admin` as the username to be the admin; any other usernames will be normal users; - get the access token via `/auth/signin`;
+- add the `Authorization` with the access token header to each request to further explore the application;
+- all the credentials can be found here [.env](.env)
 
-## Test
+## API endpoints
+for more information, please check [catalog-api doc](http://localhost:3000/doc)
 
-```bash
-# unit tests
-$ npm run test
+| Endpoint                                |     Description       | 
+| -------------                           |   :-------------:     | 
+| http://localhost:3000/doc                   | api swagger doc           | 
+| http://localhost:3000                   | healthcheck           | 
+| http://localhost:3000/auth/signup       | user sign up          |  
+| http://localhost:3000/auth/signin       | user sign in          |
+| http://localhost:3000/service       | POST to add a service         |
+| http://localhost:3000/service/:id     | GET a service        |
+| http://localhost:3000/service/:id     | DELETE a service        |
+| http://localhost:3000/service/:id     | UPDATE a service        |
+| http://localhost:3000/service/     | GET a list of services, supporting basic pagination        |
+| http://localhost:3000/service/search     | search a list of services, supporting filtering, sorting, pagination        |
+| http://localhost:3000/permission/grant     | grant a user to access a service        |
+| http://localhost:3000/permission/remove     | remove a user from accessing a service        |
+| http://localhost:3000/permission     | GET a list of services that allows to be accessed for the current user        |
+| http://localhost:3000/permission/:id    | GET a list of services that allows to be accessed for the given user        |
 
-# e2e tests
-$ npm run test:e2e
+## Design
+The service catalog api was designed for small- and medium-sized enterprises. 
+### Function design
+It contains 3 major features/functions: 
+- auth: user management
+- permission: fine-graded permission management
+- service: service catalog management
 
-# test coverage
-$ npm run test:cov
-```
+### Architectural design
+Constricted by time, all the above 3 functions are built into one application and dockerized together with postgres database.
 
-## Support
+### Another possible architectural design for large enterprises
+For large enterprises, the above 3 features/functions can be optionally separated into 3 applications with their own persistent layers. 
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+![another possible design](./catalog_optional_design.png)
 
-## Stay in touch
+## Authentication/Authorization
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+![there few layers of access control](./service_catalog_auth.png)
 
-## License
+For the service catalog endpoints, there few layers of access control:
+- all the endpoint requires JWT auth;
+- admin users have the full access to the all the services;
+- for normal users, the fine-graded permission ([the permission endpoint](http://localhost:3000/permission)) plays a role here. 
 
-Nest is [MIT licensed](LICENSE).
+  1. all the users can have the full access to the services added by themselves; 
+  2. services created a different users can only be accessed after the permission being granted by admin users; 
+  3. When retrieving a list of services, only permitted services are exposed. 
+  4. The fine-graded permission is implemented by NestJS interceptors;
+
+## Additional considerations
+- This is a weekend POC project and the author has never been previously exposed to NestJS. Reading NextJS documentation and coding happened within a very short period and there are tons of points to be improved for production purpose;
+- The project needs more tests (need more time) and ideally, a pipeline should be included/setup for CI/CD;
+
