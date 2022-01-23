@@ -1,3 +1,4 @@
+import { PermissionRepository } from './../permission/repository/permission.repository';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ServiceController } from './service.controller';
 import { ServiceService } from './services/service.service';
@@ -38,11 +39,15 @@ describe('ServiceController', () => {
       controllers: [ServiceController],
       providers: [
         {
+          provide: getRepositoryToken(PermissionRepository),
+          useValue: {},
+        },
+        {
           provide: ServiceService,
           useValue: {
             createService: jest
               .fn()
-              .mockImplementation((service: CreateServiceDto) =>
+              .mockImplementation((userId: string, service: CreateServiceDto) =>
                 Promise.resolve({ id: 'a uuid', ...service }),
               ),
             findAllServices: jest.fn().mockResolvedValue(services),
@@ -77,18 +82,19 @@ describe('ServiceController', () => {
             ),
             createServiceVersion: jest
               .fn()
-              .mockImplementation((version: CreateServiceVersionDto) =>
-                Promise.resolve({
-                  id: version.uuid,
-                  service: 'Service 1',
-                  description: 'this is service 1',
-                  versions: [
-                    {
-                      id: 'a version uuid',
-                      version: version.version,
-                    },
-                  ],
-                }),
+              .mockImplementation(
+                (userId: string, version: CreateServiceVersionDto) =>
+                  Promise.resolve({
+                    id: version.uuid,
+                    service: 'Service 1',
+                    description: 'this is service 1',
+                    versions: [
+                      {
+                        id: 'a version uuid',
+                        version: version.version,
+                      },
+                    ],
+                  }),
               ),
           },
         },
@@ -115,12 +121,12 @@ describe('ServiceController', () => {
         description: 'this is the description',
       };
 
-      await expect(controller.createService(createServiceDto)).resolves.toEqual(
-        {
-          id: 'a uuid',
-          ...createServiceDto,
-        },
-      );
+      await expect(
+        controller.createService('userId', createServiceDto),
+      ).resolves.toEqual({
+        id: 'a uuid',
+        ...createServiceDto,
+      });
     });
   });
 
@@ -199,7 +205,7 @@ describe('ServiceController', () => {
       };
 
       await expect(
-        controller.createServiceVersion(versionDto),
+        controller.createServiceVersion('userId', versionDto),
       ).resolves.toEqual({
         id: 'service uuid',
         service: 'Service 1',

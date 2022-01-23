@@ -6,7 +6,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { PermissionRepository } from 'src/permission/repository/permission.repository';
+import { PermissionRepository } from '../../permission/repository/permission.repository';
 
 @Injectable()
 export class AuthorizationInterceptor implements NestInterceptor {

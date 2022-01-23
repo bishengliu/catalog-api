@@ -83,6 +83,14 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "modulePaths": ["./"],
+    "moduleNameMapper":{
+      "^@catalog/common/(.*)$": "<rootDir>/common/$1",
+      "@catalog/service": "<rootDir>/service",
+      "@catalog/auth": "<rootDir>/auth",
+      "@catalog/permission": "<rootDir>/permission"
+      
+    }
   }
 }
