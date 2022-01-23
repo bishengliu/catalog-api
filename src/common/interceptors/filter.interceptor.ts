@@ -6,7 +6,7 @@ import {
   Logger,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { map, Observable } from 'rxjs';
+import { map } from 'rxjs';
 import { PermissionRepository } from 'src/permission/repository/permission.repository';
 
 @Injectable()
