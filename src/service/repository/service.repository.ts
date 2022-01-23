@@ -82,11 +82,6 @@ export class ServiceRepository extends Repository<Service> {
   ): Promise<Version> {
     const service = await this.findServiceByUUID(createServiceVersionDto.uuid);
 
-    // should allow admin to proceed
-    if (service.userId !== userId) {
-      throw new UnauthorizedException();
-    }
-
     try {
       const version = new Version();
       version.service = service;
