@@ -20,7 +20,8 @@
     "paths": {
       "@catalog/service/*": ["src/service/*"],
       "@catalog/auth/*": ["src/auth/*"],
-      "@catalog/permission/*": ["src/auth/*"]
+      "@catalog/permission/*": ["src/permission/*"],
+      "@catalog/common/*": ["src/common/*"]
     }
   }
 }

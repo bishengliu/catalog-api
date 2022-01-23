@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Param, UseGuards } from '@nestjs/common';
-import { GetUser } from 'src/common/decorators/user.decorator';
-import { User } from '@catalog/auth/entities/user.entity';
-import { AdminGuard } from 'src/common/guards/admin.guard';
+import { GetUser } from '../common/decorators/user.decorator';
+import { User } from '../auth/entities/user.entity';
+import { AdminGuard } from '../common/guards/admin.guard';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { PermissionService } from './services/permission.service';
 import { CreatePermissionDto } from './dto/create-permission.dto';
