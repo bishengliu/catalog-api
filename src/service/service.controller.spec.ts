@@ -1,16 +1,16 @@
-import { OrderByKey } from './dto/filter-searvices.dto';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ServiceController } from './service.controller';
 import { ServiceService } from './services/service.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { ServiceRepository } from './repository/service.repository';
 import {
+  OrderByKey,
   CreateServiceDto,
   FilterKey,
   FilterServicesDto,
   UpdateServiceDto,
+  CreateServiceVersionDto,
 } from './dto';
-import { CreateServiceVersionDto } from './dto/create-service-version.dto';
 
 const services = [
   {

@@ -6,7 +6,6 @@ import {
   InternalServerErrorException,
   Logger,
   NotFoundException,
-  UnauthorizedException,
 } from '@nestjs/common';
 
 import { Version, Service } from '../entities';
