@@ -6,12 +6,11 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
-  OneToMany,
 } from 'typeorm';
-import { Version } from './version.entity';
-@Entity('service')
-@Unique(['service'])
-export class Service extends BaseEntity {
+
+@Entity('permission')
+@Unique('userId_serviceId_unq', ['userId', 'serviceId'])
+export class Permission extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -19,15 +18,7 @@ export class Service extends BaseEntity {
   userId: string;
 
   @Column({ type: 'varchar', nullable: false })
-  service: string;
-
-  @Column({ type: 'text', nullable: true })
-  description: string;
-
-  @OneToMany(() => Version, (version) => version.service, {
-    eager: true,
-  })
-  versions: Version[];
+  serviceId: string;
 
   @CreateDateColumn()
   createdAt: Date;

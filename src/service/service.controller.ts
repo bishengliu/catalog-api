@@ -9,6 +9,9 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
+import { AuthorizationInterceptor } from 'src/common/interceptors/authorization.interceptor';
+import { FilterInterceptor } from 'src/common/interceptors/filter.interceptor';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { GetUser } from '../common/decorators/user.decorator';
 import {
@@ -18,9 +21,8 @@ import {
   UpdateServiceDto,
 } from './dto';
 import { ServiceService } from './services/service.service';
-import { AuthorizationInterceptor } from 'src/common/interceptors/authorization.interceptor';
-import { FilterInterceptor } from 'src/common/interceptors/filter.interceptor';
 
+@ApiTags('Service')
 @Controller('service')
 @UseGuards(JwtAuthGuard)
 export class ServiceController {
