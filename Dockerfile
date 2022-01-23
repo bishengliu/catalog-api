@@ -4,6 +4,7 @@ WORKDIR /app
 
 COPY ./package.json ./package-lock.json /app/
 
+RUN apk --no-cache add --virtual builds-deps build-base python
 RUN npm install
 
 COPY . /app/

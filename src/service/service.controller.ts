@@ -17,7 +17,6 @@ import {
   UpdateServiceDto,
 } from './dto';
 import { ServiceService } from './services/service.service';
-import { User } from './../auth/entities/user.entity';
 
 @Controller('service')
 @UseGuards(JwtAuthGuard)
@@ -26,15 +25,22 @@ export class ServiceController {
 
   // create a service
   @Post()
-  createService(@Body() createServiceDto: CreateServiceDto) {
-    return this.serviceService.createService(createServiceDto);
+  createService(
+    @GetUser('id') userId: string,
+    @Body() createServiceDto: CreateServiceDto,
+  ) {
+    return this.serviceService.createService(userId, createServiceDto);
   }
   // append versions to a service
   @Post('version')
   createServiceVersion(
+    @GetUser('id') userId: string,
     @Body() createServiceVersionDto: CreateServiceVersionDto,
   ) {
-    return this.serviceService.createServiceVersion(createServiceVersionDto);
+    return this.serviceService.createServiceVersion(
+      userId,
+      createServiceVersionDto,
+    );
   }
 
   // search/filter service
@@ -45,7 +51,7 @@ export class ServiceController {
 
   // retrieve all services
   @Get()
-  findAllServices(@Param('offset') offset: number, @GetUser() user: User) {
+  findAllServices(@Param('offset') offset: number) {
     return this.serviceService.findAllServices(offset);
   }
 
