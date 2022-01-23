@@ -1,31 +1,28 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, Param } from '@nestjs/common';
+import { GetUser } from 'src/common/decorators/user.decorator';
 import { PermissionService } from './services/permission.service';
 import { CreatePermissionDto } from './dto/create-permission.dto';
+import { RemovePermissionDto } from './dto/remove-permission.dto';
 
 @Controller('permission')
 export class PermissionController {
   constructor(private readonly permissionService: PermissionService) {}
 
   @Post()
-  create(@Body() createPermissionDto: CreatePermissionDto) {
-    return this.permissionService.create(createPermissionDto);
+  grantAccess(@Body() createPermissionDto: CreatePermissionDto) {
+    return this.permissionService.grantAccess(createPermissionDto);
   }
 
+  @Post()
+  removeAccess(@Body() removePermissionDto: RemovePermissionDto) {
+    return this.permissionService.removeAccess(removePermissionDto);
+  }
+  @Get()
+  getAccesses(@GetUser('id') userId: string) {
+    return this.permissionService.getAccesses(userId);
+  }
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.permissionService.findOne(+id);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.permissionService.remove(+id);
+  listUserAccess(@Param('id') id: string) {
+    return this.permissionService.getAccesses(id);
   }
 }

@@ -1,17 +1,23 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { CreatePermissionDto } from '../dto/create-permission.dto';
-
+import { PermissionRepository } from '../repository/permission.repository';
+import { RemovePermissionDto } from './../dto/remove-permission.dto';
 @Injectable()
 export class PermissionService {
-  create(createPermissionDto: CreatePermissionDto) {
-    return 'This action adds a new permission';
+  constructor(
+    @InjectRepository(PermissionRepository)
+    private serviceRepository: PermissionRepository,
+  ) {}
+  grantAccess(createPermissionDto: CreatePermissionDto) {
+    return this.serviceRepository.createPermission(createPermissionDto);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} permission`;
+  removeAccess(removePermissionDto: RemovePermissionDto) {
+    return this.serviceRepository.removePermission(removePermissionDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} permission`;
+  getAccesses(id: string) {
+    return this.serviceRepository.getPermissions(id);
   }
 }
