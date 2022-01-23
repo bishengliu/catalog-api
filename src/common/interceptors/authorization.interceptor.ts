@@ -6,7 +6,6 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Observable } from 'rxjs';
 import { PermissionRepository } from 'src/permission/repository/permission.repository';
 
 @Injectable()
@@ -18,6 +17,7 @@ export class AuthorizationInterceptor implements NestInterceptor {
   async intercept(context: ExecutionContext, next: CallHandler<any>) {
     const req = context.switchToHttp().getRequest();
     const user = req.user;
+
     if (user && (user.isAdmin || (await this.shouldProceed(req)))) {
       return next.handle();
     }

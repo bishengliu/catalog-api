@@ -7,7 +7,8 @@ import { ServiceRepository } from './repository/service.repository';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([ServiceRepository, PermissionRepository]),
+    TypeOrmModule.forFeature([ServiceRepository]),
+    TypeOrmModule.forFeature([PermissionRepository]),
   ],
   controllers: [ServiceController],
   providers: [ServiceService],
