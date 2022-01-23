@@ -11,18 +11,10 @@ import { isUuid } from 'uuidv4';
 import { Permission } from '../entities/permission.entity';
 import { RemovePermissionDto } from '../dto/remove-permission.dto';
 import { CreatePermissionDto } from './../dto/create-permission.dto';
-import { InjectRepository } from '@nestjs/typeorm';
 
 @EntityRepository(Permission)
 export class PermissionRepository extends Repository<Permission> {
   private readonly logger = new Logger(PermissionRepository.name);
-
-  constructor(
-    @InjectRepository(UserRepository)
-    private userRepository: UserRepository,
-  ) {
-    super();
-  }
 
   async createPermission(createPermissionDto: CreatePermissionDto) {
     const { userId, serviceId } = createPermissionDto;
