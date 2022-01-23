@@ -28,11 +28,11 @@ export class PermissionRepository extends Repository<Permission> {
     const { userId, serviceId } = createPermissionDto;
 
     try {
-      if (await this.find({ userId: userId, serviceId: serviceId })) {
-        return {
-          message: `user(${userId}) already has the full access to service ${serviceId}`,
-        };
-      }
+      // if (await this.find({ userId: userId, serviceId: serviceId })) {
+      //   return {
+      //     message: `user(${userId}) already has the full access to service ${serviceId}`,
+      //   };
+      // }
 
       const permission = new Permission();
       permission.userId = userId;
