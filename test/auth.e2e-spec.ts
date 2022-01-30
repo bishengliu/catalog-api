@@ -1,13 +1,12 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication } from '@nestjs/common';
-import { TypeOrmModule, getRepositoryToken } from '@nestjs/typeorm';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from '../src/auth/entities/user.entity';
 import { AuthModule } from '../src/auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { UserRepository } from './../src/auth/repository/user.repository';
 import { AuthService } from './../src/auth/services/auth.service';
 import { JwtStrategy } from './../src/auth/strategies/jwt-strategy';
-import { getRepository, Repository } from 'typeorm';
 
 describe('AuthController (e2e)', () => {
   let app: INestApplication;
