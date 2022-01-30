@@ -8,13 +8,15 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { map } from 'rxjs';
 import { PermissionRepository } from '../../permission/repository/permission.repository';
-
+import { ServiceRepository } from '../../service/repository/service.repository';
 @Injectable()
 export class FilterInterceptor implements NestInterceptor {
   private readonly logger = new Logger(FilterInterceptor.name);
   constructor(
     @InjectRepository(PermissionRepository)
     private permissionRepository: PermissionRepository,
+    @InjectRepository(ServiceRepository)
+    private serviceRepository: ServiceRepository,
   ) {}
   async intercept(context: ExecutionContext, next: CallHandler<any>) {
     const req = context.switchToHttp().getRequest();
@@ -39,8 +41,15 @@ export class FilterInterceptor implements NestInterceptor {
       const perms = await this.permissionRepository.find({
         where: { userId: userId },
       });
-      if (!perms) return [];
-      return perms.map((perm) => perm.serviceId);
+      const selfServices = await this.serviceRepository.find({
+        where: { userId: userId },
+      });
+
+      if (!perms && !selfServices) return [];
+
+      return perms
+        .map((perm) => perm.serviceId)
+        .concat(selfServices.map((service) => service.id));
     } catch (error) {
       this.logger.error(error);
       this.logger.error('Something went wrong, give no permissions!');
